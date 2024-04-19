@@ -1,0 +1,79 @@
+﻿@model IEnumerable<GamesForU.Models.GamesOrders>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Ihr Warenkorb - @User.Identity.Name </h1>
+@if (User.Identity.IsAuthenticated)
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Games.Name)
+            </th>
+            <th>
+                    @Html.DisplayNameFor(model => model.Games.Price) pro Spiel
+            </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Games.Price)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders.User.Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+            @{
+                decimal totalSum = 0;
+            }
+
+        @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Games.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Games.Price) &euro;
+            </td>
+            <td>
+                  @{
+                 long price = Int64.Parse(item.Games.Price);
+              decimal totalPrice = price * item.Amount;
+                 }
+                @{
+              totalSum += totalPrice;
+               }
+            @totalPrice &euro;
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Orders.User.Email)
+                </td>
+            <td>
+                    <a asp-action="RemoveFromCard" asp-route-id="@item.Id">RemoveFromCard</a>
+            </td>
+        </tr>
+            }
+    </tbody>
+</table>
+    @if (User.IsInRole("Member"))
+    {
+<div class="form-group">
+        <form method="post"asp-action="Buy">
+        <input type="submit" value="Kaufen für @totalSum €" class="btn btn-primary mt-2" />
+    </form>
+</div>
+    }
+    }
+else
+{
+    <small>Sie müssen eingeloggt sein um den Warenkorb anzusehen. xxx</small>
+}

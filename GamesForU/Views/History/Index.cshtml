@@ -1,0 +1,105 @@
+﻿@model IEnumerable<GamesForU.Models.GamesOrders>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrdersId)
+            </th>
+            <th>
+                Spiele
+            </th>
+            <th>
+                Amount
+            </th>
+            <th>
+               Price
+            </th>
+            <th>
+                Invoice
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders.User.Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var list = Model.ToList();
+            int tempOrder = list.First().OrdersId;
+            long tempPrice = 0;
+        }
+        @foreach (var item in Model) {
+            if (tempOrder != item.OrdersId)
+            {
+
+                <tr>
+                    <td> GesPreis from Order: @tempOrder: @tempPrice &euro;</td>
+                </tr>
+                tempOrder = item.OrdersId;
+
+                tempPrice = 0;
+            }
+            <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrdersId)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Games.Name)
+
+        
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+
+                </td>
+            <td>
+                    @{
+                        long pricefull = 0;
+                        var price =  Int64.Parse(item.Games.Price) * item.Amount;
+                        pricefull += price;
+                        tempPrice += pricefull;
+                    }
+                    @pricefull &euro;
+
+            </td>
+            <td>
+                    @{
+                        if(item.Orders.Invoice == null || item.Orders.Invoice == "")
+                        {
+                            
+                        }
+                 else
+                {
+                           <a asp-controller="History" asp-action="ShowRechnung" asp-route-id="@item.Orders.Id">@Html.DisplayFor(modelItem => item.Orders.Invoice)</a>
+
+                }
+                 
+                    }
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Orders.User.Email)
+                </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+            </tr>
+            
+
+
+}   
+
+    </tbody>
+</table>

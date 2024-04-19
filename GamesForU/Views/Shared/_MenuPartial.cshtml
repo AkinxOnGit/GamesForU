@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<ul class="navbar-nav flex-grow-1">
+    @if (!User.IsInRole("Admin"))
+{
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Games" asp-action="Index">Games</a>
+            </li>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="GamesOrders" asp-action="Index">My Card</a>
+            </li>
+      
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="History" asp-action="Index">Buy History</a>
+            </li>
+        }
+    }
+else
+{
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="UserRoles" asp-action="Index">Manage All Users</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="GamesOrders" asp-action="Index">All Cards</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="History" asp-action="Index">All History</a>
+        </li>
+}
+   
+</ul>
