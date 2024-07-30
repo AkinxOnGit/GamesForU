@@ -9,7 +9,7 @@
     <thead>
         <tr>
             <th>Email</th>
-            <th>Roles</th>
+            <th>Rollen</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -18,12 +18,11 @@
         {
             <tr>
                 <td>@user.UserName</td>
-                <td>@user.Email</td>
                 <td>@string.Join(" , ", user.Roles.ToList())</td>
                 <td>
                     <a class="btn btn-primary" asp-controller="UserRoles" asp-action="Manage" asp-route-userId="@user.UserId">Manage Roles</a>
-                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@user.UserId">Edit</a>
-                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@user.UserId">Details</a>
+                    <a class="btn" style="background-color: burlywood; color: white" asp-action="Edit" asp-route-id="@user.UserId">Edit</a>
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@user.UserId" style="color: white">Details</a>
                     <a class="btn btn-danger" asp-action="Delete" asp-route-id="@user.UserId">Delete</a>
                 </td>
             </tr>

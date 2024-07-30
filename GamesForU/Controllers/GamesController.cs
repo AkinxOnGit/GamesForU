@@ -93,16 +93,47 @@ namespace GamesForU.Controllers
             return _userManager.GetUserAsync(HttpContext.User);
         }
 
-
-
-
-
         // GET: Games
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            var applicationDbContext = _context.Games.Include(g => g.Pg).Include(g => g.Publisher);
-            return View(await applicationDbContext.ToListAsync());
+            ViewData["NameSortParam"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["PriceSortParam"] = sortOrder == "Price" ? "price_desc" : "Price";
+            ViewData["PublisherSortParam"] = sortOrder == "Publisher" ? "publisher_desc" : "Publisher";
+            ViewData["CurrentFilter"] = searchString;
+
+            var games = from g in _context.Games.Include(g => g.Pg).Include(g => g.Publisher)
+                        select g;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                games = games.Where(g => g.Name.Contains(searchString) || g.Publisher.Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    games = games.OrderByDescending(g => g.Name);
+                    break;
+                case "Price":
+                    games = games.OrderBy(g => g.Price);
+                    break;
+                case "price_desc":
+                    games = games.OrderByDescending(g => g.Price);
+                    break;
+                case "Publisher":
+                    games = games.OrderBy(g => g.Publisher.Name);
+                    break;
+                case "publisher_desc":
+                    games = games.OrderByDescending(g => g.Publisher.Name);
+                    break;
+                default:
+                    games = games.OrderBy(g => g.Name);
+                    break;
+            }
+
+            return View(await games.ToListAsync());
         }
+
 
         // GET: Games/Details/5
         public async Task<IActionResult> Details(int? id)

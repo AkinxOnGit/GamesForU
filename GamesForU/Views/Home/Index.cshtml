@@ -13,10 +13,10 @@
 
 			var chart = new CanvasJS.Chart("chartContainer", {
 				animationEnabled: true,
-				theme: "light2", // "light1", "dark1", "dark2"
+				theme: "light1", // "light1", "dark1", "dark2"
 				exportEnabled: true,
 				title: {
-					text: "Most Sold Games"
+					text: "Meistverkauften Spiele"
 				},
 				data: [{
 					type: "column",
@@ -29,10 +29,7 @@
 	</script>
 </head>
 <body>
-	<div class="text-center">
-		<h1 class="display-4">Welcome</h1>
-	</div>
-	<div id="chartContainer" style="height: 570px; width: 100%;"></div>
+	<div id="chartContainer" style="height: 650px; width: 100%;"></div>
 
 	<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 	<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>

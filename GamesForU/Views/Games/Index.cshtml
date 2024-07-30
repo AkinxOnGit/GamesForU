@@ -4,25 +4,38 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Alle Spiele</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Neues Spiel erstellen</a>
 </p>
+
+@using (Html.BeginForm("Index", "Games", FormMethod.Get))
+{
+    <div class="form-group">
+        <label for="searchString" class="sr-only">Find by name or publisher:</label>
+        <div class="input-group">
+            <input type="text" name="searchString" class="form-control" placeholder="Search for games..." value="@ViewData["CurrentFilter"]" />
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </span>
+        </div>
+    </div>
+}
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParam"]"style="color: black">Preis €</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+                Anzahl
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParam"]"style="color: black">@Html.DisplayNameFor(model => model.Name)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Publisher)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["PublisherSortParam"]" style="color: black">Publisher</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Pg)
@@ -31,32 +44,32 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Publisher.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pg.AgeRestriction)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>    |
-                <a asp-action="AddToCard" asp-route-id="@item.Id">AddToCard</a>
-
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price) €
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pg.AgeRestriction)
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Editieren</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn" style="background-color:burlywood; color: white">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Löschen</a>    |
+                    <a asp-action="AddToCard" asp-route-id="@item.Id" class="btn btn-success">Zum Warenkorb hinzufügen</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
