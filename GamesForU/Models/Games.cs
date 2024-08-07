@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace GamesForU.Models
 {
@@ -14,13 +16,10 @@ namespace GamesForU.Models
         public int PublisherId { get; set; }
         public virtual Publisher? Publisher { get; set; }
 
-
         [ForeignKey("Pg")]
         public int PgId { get; set; }
         public virtual Pg? Pg { get; set; }
 
-
-        public virtual ICollection<Category> Category { get; set; } = new List<Category>();
         public virtual ICollection<GamesOrders> GamesOrders { get; set; } = new List<GamesOrders>();
     }
 }

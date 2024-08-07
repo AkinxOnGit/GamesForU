@@ -34,7 +34,7 @@ namespace GamesForU.Migrations
 
                     b.HasIndex("GamesId");
 
-                    b.ToTable("CategoryGames");
+                    b.ToTable("CategoryGames", (string)null);
                 });
 
             modelBuilder.Entity("GamesForU.Models.Category", b =>
@@ -51,7 +51,7 @@ namespace GamesForU.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("GamesForU.Models.Game", b =>
@@ -85,7 +85,7 @@ namespace GamesForU.Migrations
 
                     b.HasIndex("PublisherId");
 
-                    b.ToTable("Game");
+                    b.ToTable("Game", (string)null);
                 });
 
             modelBuilder.Entity("GamesForU.Models.GamesOrders", b =>
@@ -111,7 +111,7 @@ namespace GamesForU.Migrations
 
                     b.HasIndex("OrdersId");
 
-                    b.ToTable("GamesOrders");
+                    b.ToTable("GamesOrders", (string)null);
                 });
 
             modelBuilder.Entity("GamesForU.Models.Orders", b =>
@@ -136,7 +136,7 @@ namespace GamesForU.Migrations
 
                     b.HasIndex("IdentityUserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("GamesForU.Models.Pg", b =>
@@ -152,7 +152,7 @@ namespace GamesForU.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pg");
+                    b.ToTable("Pg", (string)null);
                 });
 
             modelBuilder.Entity("GamesForU.Models.Publisher", b =>
@@ -169,7 +169,7 @@ namespace GamesForU.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Publisher");
+                    b.ToTable("Publisher", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

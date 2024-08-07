@@ -1,40 +1,68 @@
 ﻿@model IEnumerable<GamesForU.Models.Orders>
 
 @{
-	ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home Page";
 }
 
 <!DOCTYPE HTML>
 <html>
 <head>
+    <script>
+        window.onload = function () {
+            var chartBestSelling = new CanvasJS.Chart("chartContainerBestSelling", {
+                animationEnabled: true,
+                theme: "light1",
+                exportEnabled: true,
+                title: {
+                    text: "Meistverkaufte Spiele"
+                },
+                data: [{
+                    type: "column",
+                    dataPoints: @Html.Raw(ViewBag.DataPointsBestSelling)
+                        }]
+            });
+            chartBestSelling.render();
 
-	<script>
-		window.onload = function () {
+            var chartMostExpensive = new CanvasJS.Chart("chartContainerMostExpensive", {
+                animationEnabled: true,
+                theme: "light1",
+                exportEnabled: true,
+                title: {
+                    text: "Teuerste Spiele"
+                },
+                data: [{
+                    type: "column",
+                    dataPoints: @Html.Raw(ViewBag.DataPointsMostExpensive)
+                        }]
+            });
+            chartMostExpensive.render();
 
-			var chart = new CanvasJS.Chart("chartContainer", {
-				animationEnabled: true,
-				theme: "light1", // "light1", "dark1", "dark2"
-				exportEnabled: true,
-				title: {
-					text: "Meistverkauften Spiele"
-				},
-				data: [{
-					type: "column",
-					dataPoints: @Html.Raw(ViewBag.DataPoints)
-			}]
-			});
-			chart.render();
-
-		}
-	</script>
+            var chartUserOrders = new CanvasJS.Chart("chartContainerUserOrders", {
+                animationEnabled: true,
+                theme: "light1",
+                exportEnabled: true,
+                title: {
+                    text: "Benutzer mit den meisten Bestellungen"
+                },
+                data: [{
+                    type: "column",
+                    dataPoints: @Html.Raw(ViewBag.DataPointsUserOrders)
+                        }]
+            });
+            chartUserOrders.render();
+        }
+    </script>
 </head>
 <body>
-	<div id="chartContainer" style="height: 650px; width: 100%;"></div>
+    <div id="chartContainerBestSelling" style="height: 400px; width: 100%;"></div>
+    <div id="chartContainerMostExpensive" style="height: 400px; width: 100%; margin-top: 20px;"></div>
+    <div id="chartContainerUserOrders" style="height: 400px; width: 100%; margin-top: 20px;"></div>
 
-	<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-	<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+     <div style="margin-top: 20px;">
+        <h3>Gesamtsumme aller Bestellungen: @ViewBag.TotalOrderSum €</h3>
+    </div>
+
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 </body>
 </html>
-
-
-
